@@ -1,0 +1,168 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "BE-.#####",
+ "creation": "2024-11-13 15:35:15.570650",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "branch",
+  "cost_center",
+  "branch_cash_account",
+  "column_break_1tnf",
+  "pos_profile",
+  "pos_opening_shift",
+  "company",
+  "branch_expense_template",
+  "expense_account",
+  "section_break_6bsl",
+  "branch_expense_item",
+  "section_break_ag1k",
+  "column_break_bpwd",
+  "column_break_cajr",
+  "total_amount",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "default": "now",
+   "fieldname": "date",
+   "fieldtype": "Datetime",
+   "label": "Date"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Branch Expense",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "pos_profile.custom_branch",
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch_expense_item",
+   "fieldtype": "Table",
+   "label": "Branch Expense Item",
+   "options": "Branch Expense Item"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Data",
+   "label": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_1tnf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pos_profile",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "POS Profile",
+   "options": "POS Profile",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "pos_profile.branch_cash_account",
+   "fieldname": "branch_cash_account",
+   "fieldtype": "Link",
+   "label": "Branch Cash Account",
+   "options": "Account",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "options": "company:company_currency"
+  },
+  {
+   "fieldname": "section_break_6bsl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bpwd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cajr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ag1k",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "branch_expense_template",
+   "fieldtype": "Link",
+   "label": "Branch Expense Template",
+   "options": "Branch Expense Template"
+  },
+  {
+   "fetch_from": "branch_expense_template.expense_account",
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Expense Account",
+   "options": "Account",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "pos_profile.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "pos_opening_shift",
+   "fieldtype": "Link",
+   "label": "Pos Opening Shift",
+   "options": "POS Opening Shift"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "group": "Journal Entry",
+   "link_doctype": "Journal Entry",
+   "link_fieldname": "custom_branch_expense"
+  }
+ ],
+ "modified": "2025-07-23 15:50:22.312501",
+ "modified_by": "Administrator",
+ "module": "Tech4all POS General",
+ "name": "Branch Expense",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

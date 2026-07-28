@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+*.egg-info
+*.swp
+tags
+tech4all_pos_general/docs/current
+node_modules/

@@ -1,0 +1,23 @@
+{
+ "content": null,
+ "creation": "2023-09-21 20:28:05.191832",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2023-09-21 20:28:10.520428",
+ "modified_by": "Administrator",
+ "module": "Tech4all General",
+ "name": "my-announcements",
+ "owner": "Administrator",
+ "page_name": "my-announcements",
+ "roles": [
+  {
+   "role": "All company Users"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 1,
+ "title": "Announcements"
+}

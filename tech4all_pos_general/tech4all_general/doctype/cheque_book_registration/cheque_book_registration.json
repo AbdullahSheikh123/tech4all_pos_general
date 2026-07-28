@@ -1,0 +1,128 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:cheque_book_number",
+ "creation": "2022-08-09 12:45:38.178324",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "bank_account",
+  "column_break_4",
+  "registration_date",
+  "bank_name",
+  "cheques_created",
+  "cheque_book_details_section",
+  "cheque_book_number",
+  "number_of_leafs",
+  "column_break_10",
+  "series_from",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fetch_from": "bank_account.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Bank Account",
+   "options": "Bank Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "registration_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Registration Date",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "bank_account.bank",
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Bank Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cheque_book_details_section",
+   "fieldtype": "Section Break",
+   "label": "Cheque Book Details"
+  },
+  {
+   "fieldname": "cheque_book_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Cheque Book Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "series_from",
+   "fieldtype": "Data",
+   "label": "Series From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Cheque Book Registration",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "cheques_created",
+   "fieldtype": "Check",
+   "label": "Cheques Created",
+   "read_only": 1
+  },
+  {
+   "fieldname": "number_of_leafs",
+   "fieldtype": "Int",
+   "label": "Number of Leafs",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2022-08-09 14:29:15.716625",
+ "modified_by": "Administrator",
+ "module": "Tech4all General",
+ "name": "Cheque Book Registration",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

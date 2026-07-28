@@ -1,0 +1,108 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-06-05 12:59:27.391644",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "print_type",
+  "print_format",
+  "printer_ip_address",
+  "printer_port",
+  "printer_size",
+  "printer_profile",
+  "column_break_jlc2",
+  "kds_station",
+  "associate_kds_station_2",
+  "associate_kds_station_3",
+  "print_all_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "print_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Print Type",
+   "options": "Invoice Print\nPre Invoice Print\nKot Print\nGift Invoice Print"
+  },
+  {
+   "fieldname": "print_format",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Print Format",
+   "options": "Print Format"
+  },
+  {
+   "fieldname": "printer_ip_address",
+   "fieldtype": "Data",
+   "label": "Printer IP Address"
+  },
+  {
+   "default": "9100",
+   "fieldname": "printer_port",
+   "fieldtype": "Data",
+   "label": "Printer Port"
+  },
+  {
+   "fieldname": "printer_size",
+   "fieldtype": "Select",
+   "label": "Printer Size",
+   "options": "80\n72\n58"
+  },
+  {
+   "fieldname": "printer_profile",
+   "fieldtype": "Select",
+   "label": "Printer Profile",
+   "options": "ZKP8001\nXP-N160I\nRP80USE\nTP806L\nAF-240\nCT-S651\nNT-5890K\nOCD-100\nOCD-300\nP822D\nPOS-5890\nRP326\nSP2000\nSunmi-V2\nTEP-200M\nTM-P80\nTM-P80-42col\nTM-T88II\nTM-T88III\nTM-T88IV\nTM-T88IV-SA\nTM-T88V\nTM-U220\nTSP600\nTUP500\nZJ-5870\ndefault\nsimple"
+  },
+  {
+   "fieldname": "kds_station",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Associate KDS Station 1",
+   "options": "KDS Station"
+  },
+  {
+   "fieldname": "associate_kds_station_2",
+   "fieldtype": "Link",
+   "label": "Associate KDS Station 2",
+   "options": "KDS Station"
+  },
+  {
+   "fieldname": "associate_kds_station_3",
+   "fieldtype": "Link",
+   "label": "Associate KDS Station 3",
+   "options": "KDS Station"
+  },
+  {
+   "default": "0",
+   "fieldname": "print_all_item",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Print All Item"
+  },
+  {
+   "fieldname": "column_break_jlc2",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-06-05 13:34:58.288730",
+ "modified_by": "Administrator",
+ "module": "Tech4all POS General",
+ "name": "POS Prints Settings",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

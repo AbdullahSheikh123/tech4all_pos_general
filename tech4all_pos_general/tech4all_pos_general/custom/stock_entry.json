@@ -1,0 +1,119 @@
+{
+ "custom_fields": [
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "dt": "Stock Entry",
+   "options": "Branch",
+   "depends_on": "stock_rejection",
+   "mandatory_depends_on": "stock_rejection",
+   "in_list_view": 1,
+   "insert_after": "custom_column_break_t8poj"
+  },
+  {
+   "fieldname": "material_request",
+   "fieldtype": "Link",
+   "label": "Material Request",
+   "dt": "Stock Entry",
+   "options": "Material Request",
+   "read_only": 1,
+   "insert_after": "custom_section_break_r7bte"
+  },
+  {
+   "fieldname": "automated_bom_manufacturing",
+   "fieldtype": "Link",
+   "label": "Automated BOM Manufacturing",
+   "dt": "Stock Entry",
+   "options": "Automated BOM Manufacturing",
+   "read_only": 1,
+   "insert_after": "job_card"
+  },
+  {
+   "fieldname": "material_request_requisition_type",
+   "fieldtype": "Select",
+   "label": "Material Request Requisition Type",
+   "dt": "Stock Entry",
+   "options": "Finished\nPacking\nConsumables",
+   "fetch_from": "material_request.requisition_type",
+   "read_only": 1,
+   "insert_after": "material_request"
+  },
+  {
+   "fieldname": "material_request_status",
+   "fieldtype": "Data",
+   "label": "Material Request Status",
+   "dt": "Stock Entry",
+   "read_only": 1,
+   "insert_after": "material_request_type"
+  },
+  {
+   "fieldname": "material_request_type",
+   "fieldtype": "Link",
+   "label": "Material Request Type",
+   "dt": "Stock Entry",
+   "options": "Material Request Type",
+   "fetch_from": "material_request.custom_material_request_purpose_type",
+   "read_only": 1,
+   "insert_after": "custom_column_break_7exm4"
+  },
+  {
+   "fieldname": "custom_column_break_7exm4",
+   "fieldtype": "Column Break",
+   "dt": "Stock Entry",
+   "insert_after": "material_request_requisition_type"
+  },
+  {
+   "fieldname": "custom_section_break_r7bte",
+   "fieldtype": "Section Break",
+   "dt": "Stock Entry",
+   "insert_after": "branch"
+  },
+  {
+   "fieldname": "custom_column_break_wkgbg",
+   "fieldtype": "Column Break",
+   "dt": "Stock Entry",
+   "insert_after": "driver"
+  },
+  {
+   "fieldname": "custom_driver_details",
+   "fieldtype": "Section Break",
+   "label": "Driver Details",
+   "dt": "Stock Entry",
+   "insert_after": "material_request_status"
+  },
+  {
+   "fieldname": "custom_add_rejection",
+   "fieldtype": "Button",
+   "label": "Add Rejection",
+   "dt": "Stock Entry",
+   "depends_on": "eval:doc.stock_rejection && doc.docstatus == 0;",
+   "insert_after": "stock_rejection"
+  },
+  {
+   "fieldname": "stock_rejection",
+   "fieldtype": "Check",
+   "label": "Branch Stock Rejection",
+   "dt": "Stock Entry",
+   "default": "0",
+   "insert_after": "custom_section_break_zpyzu"
+  },
+  {
+   "fieldname": "custom_column_break_t8poj",
+   "fieldtype": "Column Break",
+   "dt": "Stock Entry",
+   "insert_after": "custom_add_rejection"
+  },
+  {
+   "fieldname": "custom_section_break_zpyzu",
+   "fieldtype": "Section Break",
+   "dt": "Stock Entry",
+   "insert_after": "apply_putaway_rule"
+  }
+ ],
+ "custom_perms": [],
+ "doctype": "Stock Entry",
+ "links": [],
+ "property_setters": [],
+ "sync_on_migrate": 1
+} 

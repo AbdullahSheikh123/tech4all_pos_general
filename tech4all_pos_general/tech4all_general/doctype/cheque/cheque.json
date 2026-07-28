@@ -1,0 +1,135 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:cheque_number",
+ "creation": "2022-08-09 14:06:26.675130",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cheque_book",
+  "cheque_number",
+  "column_break_4",
+  "company",
+  "bank_name",
+  "bank_account",
+  "cheque_status_section",
+  "status",
+  "column_break_9",
+  "reason_of_cancellation",
+  "reference_section",
+  "reference_doctype",
+  "reference_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "cheque_book",
+   "fieldtype": "Link",
+   "label": "Cheque Book",
+   "options": "Cheque Book Registration",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cheque_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Cheque Number",
+   "read_only": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nAvailable\nIssued\nCancelled",
+   "read_only_depends_on": "eval:doc.status==\"Issued\""
+  },
+  {
+   "depends_on": "eval:doc.status=='Cancelled'",
+   "fieldname": "reason_of_cancellation",
+   "fieldtype": "Text",
+   "label": "Reason of Cancellation",
+   "mandatory_depends_on": "eval:doc.status=='Cancelled'"
+  },
+  {
+   "fieldname": "reference_section",
+   "fieldtype": "Section Break",
+   "label": "Reference"
+  },
+  {
+   "fieldname": "reference_doctype",
+   "fieldtype": "Link",
+   "label": "Reference Doctype",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Reference Name",
+   "options": "reference_doctype",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cheque_book.bank_account",
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Bank Account",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cheque_book.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "cheque_book.bank_name",
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Bank Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cheque_status_section",
+   "fieldtype": "Section Break",
+   "label": "Cheque Status"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-08-09 21:01:56.554378",
+ "modified_by": "Administrator",
+ "module": "Tech4all General",
+ "name": "Cheque",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

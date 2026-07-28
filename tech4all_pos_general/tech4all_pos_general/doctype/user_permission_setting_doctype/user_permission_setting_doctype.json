@@ -1,0 +1,71 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-26 15:24:44.104901",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "doctypelink",
+  "filter_type",
+  "time_section",
+  "filter_apply_on",
+  "column_break_whl4",
+  "time_span"
+ ],
+ "fields": [
+  {
+   "fieldname": "doctypelink",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Doctype",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "filter_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Filter Type",
+   "options": "Time\nSession\nHide All Documents"
+  },
+  {
+   "depends_on": "eval:doc.filter_type == \"Time\"",
+   "fieldname": "time_section",
+   "fieldtype": "Section Break",
+   "label": "Time"
+  },
+  {
+   "fieldname": "filter_apply_on",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Filter Apply On"
+  },
+  {
+   "fieldname": "column_break_whl4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "time_span",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Time Span",
+   "options": "Last 1 Hour\nToday\nYesterday\nLast 3 Days\nLast 7 days\nLast 30 days"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-03-24 12:29:54.251409",
+ "modified_by": "Administrator",
+ "module": "Tech4all POS General",
+ "name": "User permission Setting Doctype",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

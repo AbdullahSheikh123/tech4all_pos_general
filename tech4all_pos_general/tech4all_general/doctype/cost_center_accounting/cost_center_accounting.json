@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-06-15 21:29:14.566245",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cost_center_doctypes"
+ ],
+ "fields": [
+  {
+   "fieldname": "cost_center_doctypes",
+   "fieldtype": "Table",
+   "label": "Cost Center Doctypes",
+   "options": "Cost Center Doctypes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2023-06-19 16:50:44.110662",
+ "modified_by": "Administrator",
+ "module": "Tech4all General",
+ "name": "Cost Center Accounting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

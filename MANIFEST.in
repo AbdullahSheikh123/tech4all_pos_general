@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include tech4all_pos_general *.css
+recursive-include tech4all_pos_general *.csv
+recursive-include tech4all_pos_general *.html
+recursive-include tech4all_pos_general *.ico
+recursive-include tech4all_pos_general *.js
+recursive-include tech4all_pos_general *.json
+recursive-include tech4all_pos_general *.md
+recursive-include tech4all_pos_general *.png
+recursive-include tech4all_pos_general *.py
+recursive-include tech4all_pos_general *.svg
+recursive-include tech4all_pos_general *.txt
+recursive-exclude tech4all_pos_general *.pyc
