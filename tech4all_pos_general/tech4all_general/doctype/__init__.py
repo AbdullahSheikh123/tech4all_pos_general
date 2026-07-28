@@ -1,3 +1,9 @@
+"""Legacy copy of the Selling Settings customization.
+
+The canonical customization is in
+``tech4all_general/custom/selling_settings.json``. This inert string keeps the
+package initializer importable on Frappe v15 and v16.
+
 ﻿{
  "custom_fields": [
   {
@@ -186,3 +192,4 @@
  "property_setters": [],
  "sync_on_migrate": 1
 }
+"""
