@@ -1,31 +1,49 @@
 import frappe
 from frappe import _
-from frappe.custom.doctype.property_setter.property_setter import make_property_setter
+from frappe.utils import cint
 
 
-def cost_center_validation(self, method):
+def cost_center_validation(doc, method=None):
+    """Apply cost-center rules without blocking installs or migrations.
+
+    This is a wildcard doc_event, so Frappe also calls it while syncing
+    DocTypes, customizations, and fixtures. Custom fields may not exist yet
+    during those operations.
+    """
+    settings_meta = frappe.get_meta("Accounts Settings")
+    if not settings_meta.has_field("enable_cost_center_accounting"):
+        return
+
     cost_center_settings = frappe.get_doc("Accounts Settings")
-    
-    if cost_center_settings.enable_cost_center_accounting:
-        cost_center_doctypes = frappe.get_doc("Cost Center Accounting").cost_center_doctypes
-        for cost_center_doctype in cost_center_doctypes:
-            if self.doctype == cost_center_doctype.document_type:
+    if not cint(getattr(cost_center_settings, "enable_cost_center_accounting", 0)):
+        return
 
-                meta = frappe.get_meta(self.doctype)
-                if cost_center_doctype.is_mandatory and meta.has_field('cost_center') and not self.cost_center:
-                    frappe.throw(_("Cost Center field is mandatory"))
-                if not meta.has_field("cost_center"):
-                    frappe.throw(_("Cost Center Field does not exist!"))
-                else:
-                    if cost_center_settings.enforce_cost_center_in_child_tables:
-                        if self.cost_center:
-                            child_table_fields = meta.get_table_fields()
-                            for child_table_field in child_table_fields:
-                                child_table_doctype = child_table_field.options
-                                child_table_meta = frappe.get_meta(child_table_doctype)
-                                if child_table_meta.has_field("cost_center"):
-                                    child_table_rows = getattr(self, child_table_field.fieldname)
-                                    if child_table_rows:
-                                        for row in child_table_rows:
-                                            row.cost_center = self.cost_center
-                break
+    if not frappe.db.exists("DocType", "Cost Center Accounting"):
+        return
+
+    cost_center_doctypes = getattr(
+        frappe.get_doc("Cost Center Accounting"), "cost_center_doctypes", []
+    )
+    for cost_center_doctype in cost_center_doctypes:
+        if doc.doctype != cost_center_doctype.document_type:
+            continue
+
+        meta = frappe.get_meta(doc.doctype)
+        if not meta.has_field("cost_center"):
+            frappe.throw(_("Cost Center Field does not exist!"))
+
+        if cost_center_doctype.is_mandatory and not getattr(doc, "cost_center", None):
+            frappe.throw(_("Cost Center field is mandatory"))
+
+        if (
+            cint(getattr(cost_center_settings, "enforce_cost_center_in_child_tables", 0))
+            and getattr(doc, "cost_center", None)
+        ):
+            for child_table_field in meta.get_table_fields():
+                child_table_meta = frappe.get_meta(child_table_field.options)
+                if not child_table_meta.has_field("cost_center"):
+                    continue
+
+                for row in getattr(doc, child_table_field.fieldname, []) or []:
+                    row.cost_center = doc.cost_center
+        break

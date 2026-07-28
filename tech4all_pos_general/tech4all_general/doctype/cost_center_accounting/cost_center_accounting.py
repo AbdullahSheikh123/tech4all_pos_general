@@ -4,8 +4,8 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 from frappe.custom.doctype.property_setter.property_setter import make_property_setter
+from frappe.utils import cint
 
 class CostCenterAccounting(Document):
 	def validate(self):
@@ -34,8 +34,11 @@ class CostCenterAccounting(Document):
 						)
 
 	def verify_field_in_doctype(self):
+		if not frappe.get_meta("Accounts Settings").has_field("enable_cost_center_accounting"):
+			return
+
 		cost_center_settings = frappe.get_doc("Accounts Settings")
-		if cost_center_settings.enable_cost_center_accounting:
+		if cint(getattr(cost_center_settings, "enable_cost_center_accounting", 0)):
 			for row in self.cost_center_doctypes:
 				document_type = row.document_type
 				is_mandatory = row.is_mandatory
