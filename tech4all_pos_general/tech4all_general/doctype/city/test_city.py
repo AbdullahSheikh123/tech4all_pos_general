@@ -2,8 +2,8 @@
 # See license.txt
 
 # import frappe
-from frappe.tests.utils import frappeTestCase
+from frappe.tests.utils import FrappeTestCase
 
 
-class TestCity(frappeTestCase):
+class TestCity(FrappeTestCase):
 	pass

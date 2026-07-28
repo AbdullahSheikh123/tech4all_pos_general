@@ -2,8 +2,8 @@
 # See license.txt
 
 # import frappe
-from frappe.tests.utils import frappeTestCase
+from frappe.tests.utils import FrappeTestCase
 
 
-class TestCostCenterAccounting(frappeTestCase):
+class TestCostCenterAccounting(FrappeTestCase):
 	pass
