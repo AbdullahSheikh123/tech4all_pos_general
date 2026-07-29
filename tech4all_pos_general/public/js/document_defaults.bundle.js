@@ -15,7 +15,7 @@ frappe.ui.form.Form.prototype.refresh = function(docname) {
             // Get the doctype from the current form
             doctype = frm.doctype;
             frappe.call({
-                method: "tech4all_pos_general.tech4all_pos_general.doctype.document_defaults.document_defaults.check_document_defaults",
+                method: "tech4all_pos_general.tech4all_general.doctype.document_defaults.document_defaults.check_document_defaults",
                 args: {
                     doctype: frm.doctype
                 },

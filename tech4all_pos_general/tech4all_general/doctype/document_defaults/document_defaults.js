@@ -64,7 +64,7 @@ frappe.ui.form.on('Document Defaults Condition', {
         }
         
         frappe.call({
-            method: "tech4all_pos_general.tech4all_pos_general.doctype.document_defaults.document_defaults.get_options",
+            method: "tech4all_pos_general.tech4all_general.doctype.document_defaults.document_defaults.get_options",
             args: {
                 field: fd,
                 // attribute_value: term,
@@ -90,7 +90,7 @@ function add_options(frm, row, child) {
     var fd = frm.option_fields[cur_frm.fields_dict["conditions"].doc.conditions[row].field];
     var val = cur_frm.fields_dict["conditions"].grid.grid_rows[row].columns.value_for;
     frappe.call({
-        method: "tech4all_pos_general.tech4all_pos_general.doctype.document_defaults.document_defaults.get_options",
+        method: "tech4all_pos_general.tech4all_general.doctype.document_defaults.document_defaults.get_options",
         args: {
             field: fd,
             fieldtype: fd.fieldtype,
