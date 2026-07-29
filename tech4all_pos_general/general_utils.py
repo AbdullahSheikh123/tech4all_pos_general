@@ -175,6 +175,13 @@ def get_all_roles(arg=None):
 	"""return all roles"""
 	active_domains = frappe.get_active_domains()
 	filters = {"name": ("not in", "Administrator,Guest,All"), "disabled": 0}
+	domain_filters = [
+		["restrict_to_domain", "is", "not set"],
+		["restrict_to_domain", "=", ""],
+	]
+
+	if active_domains:
+		domain_filters.append(["restrict_to_domain", "in", active_domains])
 
 	if frappe.session.user == "Administrator" or "System Manager" in frappe.get_roles():
 		pass
@@ -184,7 +191,7 @@ def get_all_roles(arg=None):
 	roles = frappe.get_all(
 		"Role",
 		filters=filters,
-		or_filters={"ifnull(restrict_to_domain, '')": "", "restrict_to_domain": ("in", active_domains)},
+		or_filters=domain_filters,
 		order_by="name",
 	)
 
