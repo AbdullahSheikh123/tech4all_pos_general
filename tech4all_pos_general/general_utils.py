@@ -192,7 +192,13 @@ def get_all_roles(arg=None):
 
 
 def onload_user(self, method):
-	from frappe.config import get_modules_from_all_apps
+	try:
+		# Frappe v16+
+		from frappe.utils.modules import get_modules_from_all_apps
+	except ImportError:
+		# Frappe v15
+		from frappe.config import get_modules_from_all_apps
+
 	all_modules = [m.get("module_name") for m in get_modules_from_all_apps()]
 
 	if frappe.session.user == "Administrator" or "System Manager" in frappe.get_roles():
