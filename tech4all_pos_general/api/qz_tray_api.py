@@ -37,3 +37,23 @@ def get_qz_credentials(branch):
         "certificate": settings.certificate,
         "private_key": settings.private_key,
     }
+
+
+@frappe.whitelist()
+def get_kds_stations_for_branch(branch):
+    """KDS Stations for this branch that actually have a QZ printer picked
+    (printer_name set). Used by the POS to decide, per branch, whether KOT
+    printing should go straight to QZ Tray or fall back to the print-dialog
+    popup - a branch with no rows here means QZ isn't configured for it yet.
+    """
+    if frappe.session.user == "Guest":
+        frappe.throw(_("Not permitted"), frappe.PermissionError)
+
+    if not branch:
+        return []
+
+    return frappe.get_all(
+        "KDS Station",
+        filters={"branch": branch, "printer_name": ["is", "set"]},
+        fields=["name", "printer_name", "qz_host"],
+    )
