@@ -49,13 +49,25 @@ function connect_qz(host, branch) {
 		qz.security.setSignaturePromise((toSign) => (resolve, reject) => {
 			get_qz_credentials(qz_current_branch)
 				.then((c) => {
+					console.log("[QZ SIGN] private_key starts with:", c.private_key?.slice(0, 30));
+					console.log("[QZ SIGN] private_key length:", c.private_key?.length);
+					console.log("[QZ SIGN] toSign:", toSign);
+
 					const pk = KEYUTIL.getKey(c.private_key);
-					const sig = new KJUR.crypto.Signature({ alg: "SHA512withRSA" });
+					console.log("[QZ SIGN] parsed key type/bitLength:", pk?.type, pk?.n?.bitLength?.());
+
+					const sig = new KJUR.crypto.Signature({ alg: "SHA1withRSA" });
 					sig.init(pk);
 					sig.updateString(toSign);
-					resolve(stob64(hextorstr(sig.sign())));
+					const hexSig = sig.sign();
+					console.log("[QZ SIGN] signature hex length:", hexSig.length);
+
+					resolve(stob64(hextorstr(hexSig)));
 				})
-				.catch(reject);
+				.catch((e) => {
+					console.error("[QZ SIGN] signing threw:", e);
+					reject(e);
+				});
 		});
 		qz_security_configured = true;
 	}
