@@ -41,6 +41,7 @@ doctype_js = {
     "Document Naming Rule": "public/js/document_naming_rule.js",
     "Customize Form": "public/js/customize_form_custom.js",
     "Department": "public/js/department_general.js",
+    "KDS Station": "public/js/kds_station.js",
 }
 
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
@@ -61,6 +62,14 @@ app_include_js = [
     "/assets/tech4all_pos_general/js/global_realtime_listener.js",
     "tech4all_general.bundle.js",
     "document_defaults.bundle.js",
+    # QZ Tray browser client + jsrsasign (client-side RSA signing of print
+    # requests). Pinned versions, loaded from jsDelivr. If you'd rather not
+    # depend on a CDN at page-load, download these two files and swap these
+    # two lines for local /assets/tech4all_pos_general/js/lib/... paths:
+    #   https://cdn.jsdelivr.net/npm/qz-tray@2.2.6/qz-tray.js
+    #   https://cdn.jsdelivr.net/npm/jsrsasign@11.1.5/lib/jsrsasign-all-min.js
+    "https://cdn.jsdelivr.net/npm/qz-tray@2.2.6/qz-tray.js",
+    "https://cdn.jsdelivr.net/npm/jsrsasign@11.1.5/lib/jsrsasign-all-min.js",
 ]
 
 extend_bootinfo = "tech4all_pos_general.general_boot.boot_session"

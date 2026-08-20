@@ -1,28 +1,48 @@
 {
  "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:branch",
  "creation": "2026-08-21 00:00:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "branch",
+  "machine_label",
   "certificate",
   "private_key"
  ],
  "fields": [
   {
-   "description": "Public QZ Tray certificate (.pem), shared by every branch/terminal.",
+   "description": "The one branch this certificate/key pair is scoped to. Only ever used to sign QZ Tray requests made in this branch's context - not shared with other branches.",
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "Free-text note to help identify whose key this is at a glance (e.g. \"Karachi - Till 1 PC\") since the record name is just the branch.",
+   "fieldname": "machine_label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Machine Label"
+  },
+  {
+   "description": "Public certificate (.pem) for this branch, headers included.",
    "fieldname": "certificate",
    "fieldtype": "Long Text",
    "label": "Certificate"
   },
   {
-   "description": "Private key (.pem) matching the certificate above. Stored encrypted; only ever sent to logged-in POS sessions.",
+   "description": "Private key (.pem) matching the certificate above, headers included. Stored encrypted; only ever served to a logged-in session for this branch.",
    "fieldname": "private_key",
    "fieldtype": "Password",
    "label": "Private Key"
   }
  ],
  "index_web_pages_for_search": 1,
- "issingle": 1,
  "links": [],
  "modified": "2026-08-21 00:00:00.000000",
  "modified_by": "Administrator",
@@ -44,5 +64,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "machine_label"
 }
