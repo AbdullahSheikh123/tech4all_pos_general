@@ -36,9 +36,9 @@
    "label": "Certificate"
   },
   {
-   "description": "Private key (.pem) matching the certificate above, headers included. Stored encrypted; only ever served to a logged-in session for this branch.",
+   "description": "Private key (.pem) matching the certificate above, headers included. Stored as plain text (Password fieldtype can't hold a full PEM key - 140 char limit); only ever served to a logged-in session for this branch, restricted to System Manager like the rest of this doctype.",
    "fieldname": "private_key",
-   "fieldtype": "Password",
+   "fieldtype": "Long Text",
    "label": "Private Key"
   }
  ],

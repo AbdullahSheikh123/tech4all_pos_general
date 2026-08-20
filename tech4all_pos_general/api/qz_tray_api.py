@@ -3,7 +3,6 @@
 
 import frappe
 from frappe import _
-from frappe.utils.password import get_decrypted_password
 
 
 @frappe.whitelist()
@@ -36,7 +35,5 @@ def get_qz_credentials(branch):
 
     return {
         "certificate": settings.certificate,
-        "private_key": get_decrypted_password(
-            "QZ Tray Settings", branch, "private_key"
-        ),
+        "private_key": settings.private_key,
     }
