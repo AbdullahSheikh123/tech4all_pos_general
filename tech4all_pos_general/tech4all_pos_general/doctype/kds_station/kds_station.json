@@ -16,7 +16,9 @@
   "section_break_ungy",
   "printer_ip_address",
   "column_break_qbkl",
-  "printer_port"
+  "printer_port",
+  "printer_name",
+  "qz_host"
  ],
  "fields": [
   {
@@ -59,6 +61,20 @@
    "fieldname": "printer_port",
    "fieldtype": "Data",
    "label": "Printer Port"
+  },
+  {
+   "description": "Selected from the live printer list reported by QZ Tray on this station's printer-connected PC (pick from the list, don't type it).",
+   "fieldname": "printer_name",
+   "fieldtype": "Data",
+   "insert_after": "printer_port",
+   "label": "QZ Printer Name"
+  },
+  {
+   "description": "LAN IP of the PC running QZ Tray for this printer. Leave blank to use localhost, for a location with a single till.",
+   "fieldname": "qz_host",
+   "fieldtype": "Data",
+   "insert_after": "printer_name",
+   "label": "QZ Tray Host (LAN IP)"
   },
   {
    "fieldname": "section_break_ungy",
