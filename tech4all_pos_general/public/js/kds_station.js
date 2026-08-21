@@ -40,6 +40,15 @@ function connect_qz(host, branch) {
 	qz_current_branch = branch;
 
 	if (!qz_security_configured) {
+		// Tells qz-tray.js what to DECLARE as the signing algorithm in each
+		// outgoing message - separate from, and must match, the alg used in
+		// setSignaturePromise below. Without this, qz-tray.js silently
+		// declares its own legacy default (SHA1) regardless of what's
+		// actually used to compute the signature, causing every request to
+		// fail server-side verification ("Bad signature" in QZ Tray's log)
+		// no matter which algorithm the signing code below uses.
+		qz.security.setSignatureAlgorithm("SHA1");
+
 		qz.security.setCertificatePromise((resolve, reject) => {
 			get_qz_credentials(qz_current_branch)
 				.then((c) => resolve(c.certificate))
