@@ -344,9 +344,30 @@ def get_item_level(dims, conditions, values):
 
 def get_payment_level(dims, conditions, values):
 	"""Payment-level aggregation (joins Sales Invoice Payment) - used for
-	Mode of Payment and any Day Wise combination that includes it. Sums the
-	payment row's own amount rather than the invoice's grand_total, so a
-	split payment isn't double-counted across its modes."""
+	Mode of Payment and any Day Wise combination that includes it.
+
+	sip.amount is the amount tendered on that payment row, not the amount
+	actually applied to the invoice - for Cash, a customer handing over more
+	than the bill (e.g. Rs 2000 for a Rs 250 total) is stored as amount=2000
+	on the Cash row, with the Rs 1750 change recorded separately on the
+	invoice itself as change_amount (see invoice.py::before_submit, standard
+	ERPNext POS behaviour). Left uncorrected, summing sip.amount straight
+	overstates Cash takings by however much change was given across the
+	period. Net it out on the Cash-type row only - change is always given in
+	cash, never on card/digital modes, even on a split-payment sale - so the
+	total here reconciles with what actually went into the till, matching the
+	header-level (POS Profile/Branch/etc.) total for the same invoices.
+
+	A single invoice can have at most one row per distinct Mode of Payment
+	(the POS UI only ever writes to pos_profile.payments.find(mode_of_payment
+	=== ...), never creates a second row of the same mode), so the ordinary
+	split-payment case (one Cash row + one or more non-cash rows) is exact.
+	The one thing that WOULD break it is a POS Profile configured with two
+	separate Modes of Payment that are both type=Cash (e.g. "Till Cash" and
+	"Petty Cash") and a sale split across both - matching on sip.type alone
+	would double-subtract change_amount once per row. The idx-based subquery
+	below closes that off by only ever crediting the change to the single
+	lowest-idx Cash row per invoice, however many Cash-typed rows it has."""
 	other_dims = [d for d in dims if d != "mode_of_payment"]
 	select_exprs, group_exprs, joins = dimension_sql(other_dims)
 	select_exprs = DIMENSIONS["mode_of_payment"]["select"] + select_exprs
@@ -355,7 +376,18 @@ def get_payment_level(dims, conditions, values):
 	query = """
 		SELECT
 			{select},
-			SUM(sip.amount) AS amount
+			SUM(
+				sip.amount
+				- CASE
+					WHEN sip.type = 'Cash'
+					 AND sip.idx = (
+						SELECT MIN(sip2.idx) FROM `tabSales Invoice Payment` sip2
+						WHERE sip2.parent = sip.parent AND sip2.type = 'Cash'
+					 )
+					THEN COALESCE(si.change_amount, 0)
+					ELSE 0
+				  END
+			) AS amount
 		FROM `tabSales Invoice` si
 		INNER JOIN `tabSales Invoice Payment` sip ON sip.parent = si.name
 		{joins}
