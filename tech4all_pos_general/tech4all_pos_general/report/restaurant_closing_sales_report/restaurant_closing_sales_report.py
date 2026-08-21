@@ -22,9 +22,9 @@ def get_data(filters):
 
     restaurant_types_query = """
         SELECT DISTINCT resturent_type
-        FROM `tabSales Invoice` as si 
-        WHERE si.posting_date >= %(from_date)s
-          AND si.posting_date <= %(to_date)s
+        FROM `tabSales Invoice` as si
+        WHERE si.custom_business_date >= %(from_date)s
+          AND si.custom_business_date <= %(to_date)s
           AND si.status = %(status)s
     """
     
@@ -65,20 +65,25 @@ def get_data(filters):
         }
         
         # Conditional query for sales invoices
+        # Filtered on custom_business_date (the shift's trading day), not
+        # posting_date, so a night that runs past midnight stays together as
+        # one day's closing total instead of splitting across two calendar
+        # dates - see custom_business_date's field description for why.
         sales_invoices_query = """
-            SELECT 
-                si.name, 
-                si.resturent_type, 
-                si.posting_date, 
-                si.total, 
-                si.grand_total, 
-                si.discount_amount, 
-                si.total_taxes_and_charges 
-            FROM 
+            SELECT
+                si.name,
+                si.resturent_type,
+                si.posting_date,
+                si.custom_business_date,
+                si.total,
+                si.grand_total,
+                si.discount_amount,
+                si.total_taxes_and_charges
+            FROM
                 `tabSales Invoice` AS si
-            WHERE 
-                si.posting_date >= %(from_date)s
-                AND si.posting_date <= %(to_date)s
+            WHERE
+                si.custom_business_date >= %(from_date)s
+                AND si.custom_business_date <= %(to_date)s
                 AND si.status = %(status)s
                 AND si.resturent_type = %(rest_type)s
         """

@@ -22,22 +22,25 @@ def get_data(filters):
     mode_of_payment = filters.get('mode_of_payment')
 
     # Base SQL query
+    # Grouped/filtered on custom_business_date (the shift's trading day), not
+    # posting_date, so a night that runs past midnight is one "day" here
+    # instead of splitting across two calendar dates.
     sql_query = """
-        SELECT 
+        SELECT
             si.name AS invoice_name,
             si.resturent_type AS resturent_type,
-            si.posting_date AS posting_date,
+            si.custom_business_date AS business_date,
             si.total AS total,
             si.discount_amount AS discount_amount,
             si.base_total_taxes_and_charges AS base_total_taxes_and_charges,
             si.grand_total AS grand_total,
             mop.mode_of_payment AS mode_of_payment
-        FROM 
+        FROM
             `tabSales Invoice` AS si
-        LEFT JOIN 
+        LEFT JOIN
             `tabSales Invoice Payment` AS mop ON si.name = mop.parent
-        WHERE 
-            si.posting_date BETWEEN %s AND %s
+        WHERE
+            si.custom_business_date BETWEEN %s AND %s
             AND si.docstatus = 1
     """
 
@@ -53,7 +56,7 @@ def get_data(filters):
         sql_query += " AND mop.mode_of_payment = %s"
         params.append(mode_of_payment)
 
-    sql_query += " ORDER BY si.posting_date ASC"
+    sql_query += " ORDER BY si.custom_business_date ASC"
 
     # Execute the SQL query
     sales_invoices = frappe.db.sql(sql_query, tuple(params), as_dict=True)
@@ -78,7 +81,7 @@ def get_data(filters):
 
         data.append({
             "resturent_type": invoice.get("resturent_type"),
-            "posting_date": invoice.get("posting_date"),
+            "business_date": invoice.get("business_date"),
             "total": gross_total,
             "discount_amount": discount,
             "base_total_taxes_and_charges": tax,
@@ -89,7 +92,7 @@ def get_data(filters):
     if sales_invoices:
         data.append({
             "resturent_type": "<b>Total</b>",
-            "posting_date": "",
+            "business_date": "",
             "total": total_gross,
             "discount_amount": total_discount,
             "base_total_taxes_and_charges": total_tax,
@@ -101,7 +104,7 @@ def get_data(filters):
 def get_columns(filters):
     columns = [
         {"label": _("Restaurant Type"), "fieldname": "resturent_type", "fieldtype": "Link", "options": "Order Type", "width": 200},
-        {"label": _("Date"), "fieldname": "posting_date", "fieldtype": "Date", "width": 180},
+        {"label": _("Business Date"), "fieldname": "business_date", "fieldtype": "Date", "width": 180},
         {"label": _("Gross Total"), "fieldname": "total", "fieldtype": "Float", "width": 200},
         {"label": _("Tax"), "fieldname": "base_total_taxes_and_charges", "fieldtype": "Float", "width": 200},
         {"label": _("Discount"), "fieldname": "discount_amount", "fieldtype": "Float", "width": 200},

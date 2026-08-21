@@ -21,30 +21,36 @@ def get_data(filters):
     # Initialize grand total
     grand_total_sum = 0.0
 
+    # Filtered on custom_business_date (the shift's trading day) rather than
+    # posting_date, so orders rung up after midnight still fall on the night
+    # they belong to instead of spilling into the next day's range. The real
+    # posting_date/posting_time are still shown per row below - only the
+    # range filter changes.
     invoice_items = frappe.db.sql("""
-    SELECT 
-        si.customer, 
-        si.name, 
-        u.full_name AS owner_full_name, 
-        si.posting_date, 
-        si.posting_time, 
-        sip.mode_of_payment, 
+    SELECT
+        si.customer,
+        si.name,
+        u.full_name AS owner_full_name,
+        si.posting_date,
+        si.posting_time,
+        si.custom_business_date,
+        sip.mode_of_payment,
         si.grand_total,
         i.item_group AS order_type
-    FROM 
+    FROM
         `tabSales Invoice` si
-    LEFT JOIN 
+    LEFT JOIN
         `tabSales Invoice Payment` sip ON si.name = sip.parent
-    INNER JOIN 
-        (SELECT parent, item_code, MIN(idx) AS min_idx FROM `tabSales Invoice Item` GROUP BY parent) sii_min 
+    INNER JOIN
+        (SELECT parent, item_code, MIN(idx) AS min_idx FROM `tabSales Invoice Item` GROUP BY parent) sii_min
         ON si.name = sii_min.parent
-    INNER JOIN 
+    INNER JOIN
         `tabItem` i ON sii_min.item_code = i.item_code
-    LEFT JOIN 
+    LEFT JOIN
         `tabUser` u ON si.owner = u.name
-    WHERE 
-        si.posting_date >= %(from_date)s
-        AND si.posting_date <= %(to_date)s
+    WHERE
+        si.custom_business_date >= %(from_date)s
+        AND si.custom_business_date <= %(to_date)s
         AND si.status = %(status)s
         AND (%(branch)s IS NULL OR si.pos_profile = %(branch)s)
 """, {
@@ -63,6 +69,7 @@ def get_data(filters):
             "owner": item.get("owner_full_name"),
             "posting_date": item.get("posting_date"),
             'posting_time': item.get("posting_time"),
+            'business_date': item.get("custom_business_date"),
             'mode_of_payment': item.get("mode_of_payment"),
             "grand_total": item.get("grand_total"),
         })
@@ -76,6 +83,7 @@ def get_data(filters):
         "owner": '',
         'posting_date': '',
         'posting_time': '',
+        'business_date': '',
         "mode_of_payment": 'Grand Total',
         "grand_total": "{:,.2f}".format(grand_total_sum)
     })
@@ -97,6 +105,8 @@ def get_columns(filters):
          "fieldtype": "Date", "width": 160},
         {"label": _("Order Time"), "fieldname": "posting_time",
          "fieldtype": "DateTime", "width": 160},
+        {"label": _("Business Date"), "fieldname": "business_date",
+         "fieldtype": "Date", "width": 160},
         {"label": _("Payment Mode"), "fieldname": "mode_of_payment",
          "fieldtype": "Data", "width": 200},
         {"label": _("Grand Total"), "fieldname": "grand_total",

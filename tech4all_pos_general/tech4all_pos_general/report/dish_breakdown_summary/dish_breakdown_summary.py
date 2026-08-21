@@ -20,13 +20,15 @@ def get_data(filters):
     branch = filters.get("name")
 
     # Retrieve distinct item groups
+    # Filtered on custom_business_date (the shift's trading day), not
+    # posting_date, so a night that runs past midnight is one day's totals.
     item_groups = frappe.db.sql("""
     SELECT DISTINCT i.item_group
     FROM `tabSales Invoice` si
     INNER JOIN `tabSales Invoice Item` sii ON si.name = sii.parent
     INNER JOIN `tabItem` i ON sii.item_code = i.item_code
-    WHERE si.posting_date >= %(from_date)s
-      AND si.posting_date <= %(to_date)s
+    WHERE si.custom_business_date >= %(from_date)s
+      AND si.custom_business_date <= %(to_date)s
       AND si.status = %(status)s
       AND (%(branch)s IS NULL OR si.pos_profile = %(branch)s)
     ORDER BY i.item_group ASC
@@ -62,13 +64,13 @@ def get_data(filters):
         }
 
         invoice_items = frappe.db.sql("""
-            SELECT sii.item_code, sii.item_name, SUM(sii.qty) as qty, 
+            SELECT sii.item_code, sii.item_name, SUM(sii.qty) as qty,
                 sii.rate as rate, SUM(sii.base_amount) as base_amount
             FROM `tabSales Invoice` si
             INNER JOIN `tabSales Invoice Item` sii ON si.name = sii.parent
             INNER JOIN `tabItem` i ON sii.item_code = i.item_code
-            WHERE si.posting_date >= %(from_date)s
-            AND si.posting_date <= %(to_date)s
+            WHERE si.custom_business_date >= %(from_date)s
+            AND si.custom_business_date <= %(to_date)s
             AND si.status = %(status)s
             AND i.item_group = %(item_group)s
             AND (%(branch)s IS NULL OR si.pos_profile = %(branch)s)

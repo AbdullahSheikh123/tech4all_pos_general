@@ -7,14 +7,15 @@ frappe.query_reports["Dish Breakdown Summary"] = {
     "filters": [
         {
             "fieldname": "from_date",
-            "label": __("From Date"),
+            "label": __("From Business Date"),
             "fieldtype": "Date",
             "default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
-            "reqd": 1
+            "reqd": 1,
+            "description": __("Restaurant trading day, not the calendar posting date - a night that runs past midnight is still counted on the day it opened.")
         },
         {
             "fieldname": "to_date",
-            "label": __("To Date"),
+            "label": __("To Business Date"),
             "fieldtype": "Date",
             "default": frappe.datetime.get_today(),
             "reqd": 1
