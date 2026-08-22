@@ -30,6 +30,7 @@ def get_data(filters):
     SELECT
         si.customer,
         si.name,
+        si.bill_no,
         u.full_name AS owner_full_name,
         si.posting_date,
         si.posting_time,
@@ -66,6 +67,7 @@ def get_data(filters):
             "customer": item.get("customer"),
             "order_type": item.get("order_type"),  # First item's order type
             "name": item.get("name"),
+            "bill_no": item.get("bill_no"),
             "owner": item.get("owner_full_name"),
             "posting_date": item.get("posting_date"),
             'posting_time': item.get("posting_time"),
@@ -80,6 +82,7 @@ def get_data(filters):
         "customer": '',
         "order_type": '',
         "name": '',
+        "bill_no": '',
         "owner": '',
         'posting_date': '',
         'posting_time': '',
@@ -99,6 +102,8 @@ def get_columns(filters):
          "fieldtype": "Data", "width": 200},
         {"label": _("Order No"), "fieldname": "name",
          "fieldtype": "Link", "options": "Sales Invoice", "width": 160},
+        {"label": _("Bill No"), "fieldname": "bill_no",
+         "fieldtype": "Int", "width": 100},
         {"label": _("Order Taker"), "fieldname": "owner",
          "fieldtype": "Data", "width": 160},
         {"label": _("Order Date"), "fieldname": "posting_date",

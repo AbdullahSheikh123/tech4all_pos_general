@@ -414,6 +414,7 @@ def get_invoice_detail(conditions, values):
 	query = """
 		SELECT
 			si.name AS sales_invoice,
+			si.bill_no AS bill_no,
 			si.customer AS customer,
 			si.custom_business_date AS business_date,
 			si.posting_date AS posting_date,
@@ -433,6 +434,7 @@ def get_invoice_detail(conditions, values):
 
 	columns = [
 		{"label": _("Sales Invoice"), "fieldname": "sales_invoice", "fieldtype": "Link", "options": "Sales Invoice", "width": 160},
+		{"label": _("Bill No"), "fieldname": "bill_no", "fieldtype": "Int", "width": 90},
 		{"label": _("Customer"), "fieldname": "customer", "fieldtype": "Link", "options": "Customer", "width": 150},
 		{"label": _("Business Date"), "fieldname": "business_date", "fieldtype": "Date", "width": 110},
 		{"label": _("Posting Date"), "fieldname": "posting_date", "fieldtype": "Date", "width": 110},
